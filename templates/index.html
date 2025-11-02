@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cyberbullying Detection</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        background: #fafafa;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial;
+      }
+      .page {
+        display: flex;
+        justify-content: center;
+        padding-top: 40px;
+        gap: 40px;
+      }
+      .left {
+        width: 480px;
+        height: 600px;
+        background: #ebebeb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+      }
+      .right {
+        width: 480px;
+        border: 1px solid #dbdbdb;
+        height: 600px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 4px;
+        background: white;
+      }
+      .comments {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+      }
+      .comment {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      .pfp {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-image: url("https://i.pravatar.cc/150?img=12");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .uname {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      .txt {
+        font-size: 14px;
+      }
+      .bottom-box {
+        padding: 10px 14px;
+        border-top: 1px solid #dbdbdb;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      textarea {
+        border: none;
+        resize: none;
+        flex: 1;
+        font-size: 14px;
+        outline: none;
+        padding-top: 7px;
+      }
+      button {
+        border: none;
+        background: transparent;
+        color: #0095f6;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.4;
+      }
+      .result-tag {
+        text-align: center;
+        font-weight: 700;
+        padding: 10px;
+        font-size: 15px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        color: white;
+      }
+      .bullying {
+        background: #ed4c67;
+      }
+      .non-bullying {
+        background: #20bf6b;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <!-- grey instagram photo area -->
+      <!--<svg width="60" height="60" fill="#c3c3c3">
+          <circle cx="30" cy="30" r="25" />
+        </svg>-->
+      <div class="left" style="overflow: hidden; padding: 0">
+        <img
+          src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1000"
+          style="width: 100%; height: 100%; object-fit: cover"
+        />
+      </div>
+
+      <div class="right">
+        <div class="comments">
+          <!-- existing fake intro comment -->
+          <div class="comment">
+            <div class="pfp"></div>
+            <div>
+              <span class="uname">username</span>
+              <span class="txt"
+                >This model detects cyberbullying comments below.</span
+              >
+            </div>
+          </div>
+
+          {% for c in comments %}
+          <div class="comment">
+            <div class="pfp"></div>
+            <div>
+              <span class="uname">you</span>
+              <span class="txt">{{c}}</span>
+            </div>
+          </div>
+          {% endfor %} {% if prediction is not none %} {% if prediction == 0 %}
+          <div class="result-tag non-bullying">Posted Successfully</div>
+          {% else %}
+          <div class="result-tag bullying">
+            Comment Blocked (Bullying Detected)
+          </div>
+          {% endif %} {% endif %}
+        </div>
+        <!-- IG icons + liked by area -->
+        <div style="border-top: 1px solid #dbdbdb; padding: 10px 14px">
+          <div
+            style="
+              display: flex;
+              gap: 18px;
+              font-size: 22px;
+              margin-bottom: 8px;
+            "
+          >
+            <span>♡</span>
+            <span>💬</span>
+            <span>↗️</span>
+          </div>
+
+          <div style="font-size: 14px; color: #444; margin-bottom: 5px">
+            Liked by
+          </div>
+          <div style="font-size: 12px; color: #888">5 days ago</div>
+        </div>
+
+        <form method="POST" class="bottom-box">
+          <div class="pfp"></div>
+          <textarea
+            name="text"
+            placeholder="Add a comment..."
+            oninput="this.nextElementSibling.disabled = (this.value.trim()==='')"
+          ></textarea>
+          <button type="submit" disabled>Post</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
